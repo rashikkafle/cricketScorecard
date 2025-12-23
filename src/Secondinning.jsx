@@ -53,7 +53,24 @@ function Secondinning() {
         setwinner(batsecond)
        }else{null}
 
-       })
+       if(wicket === 3){
+        setoverball([...overball,'w'])
+                setbowlers((prev)=> prev.map(p=> p.name === baller?{...p,ballsbowled :p.ballsbowled+1}:p))
+
+        if(isstriker){
+        
+        
+       setplayers([...players,{name:striker,runs:strikerrun,ball:strikerball}])
+      }else{
+        
+        
+          setplayers([...players,{name:nonstriker,runs:nonstrikerrun,ball:nonstrikerball}])
+             
+      }
+      }
+      
+
+       },[wicket,over,totalscore])
         const wicketchange=()=>{
     
           if(wicket === 3 || over === 10 || winner !=='') return;
@@ -106,8 +123,6 @@ function Secondinning() {
           }
           if(isrunwithwide){
                setoverball([...overball,`wd[${item}]`])
-                       setbowlers((prev)=> prev.map(p=> p.name === baller?{...p,ballsbowled :p.ballsbowled-1}:p))
-
                if (item %2 === 1){
              setistriker(!isstriker)
         }
@@ -179,7 +194,8 @@ function Secondinning() {
         }
         }
         const handlewicket=()=>{
-    
+                    setbowlers((prev)=> prev.map(p=> p.name === baller?{...p,ballsbowled :p.ballsbowled+1}:p))
+
           
                         setoverball([...overball,'w'])
     
@@ -397,8 +413,8 @@ function Secondinning() {
 
 
     </div>
-    
-                    <p className='mx-2 my-4'>congrats ,{winner} won the match</p>
+    { winner !== '' &&    <p className='mx-2 my-4'>congrats ,{winner} won the match</p>
+}
 
     
         </div>

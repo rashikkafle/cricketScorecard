@@ -56,6 +56,28 @@ function CricSC() {
       {
         settargetscore(totalscore +1)
       }
+      if(wicket === 3){
+        setoverball([...overball,'w'])
+                setbowlers((prev)=> prev.map(p=> p.name === baller?{...p,ballsbowled :p.ballsbowled+1}:p))
+
+        if(isstriker){
+        
+        setstriker(inpname)
+        setstrikerball(0)
+        setstrikerrun(0)
+        setinpname('')
+       setplayers([...players,{name:striker,runs:strikerrun,ball:strikerball}])
+      }else{
+        
+        setnonstriker(inpname)
+        setnonstrikerball(0)
+        setnonstrikerrun(0)
+                setinpname('')
+          setplayers([...players,{name:nonstriker,runs:nonstrikerrun,ball:nonstrikerball}])
+             
+      }
+      }
+      
     },[wicket,over,totalscore])
 
     const wicketchange=()=>{
@@ -64,7 +86,7 @@ function CricSC() {
 
 
       if(wicket === 3 || over === 10 ) return;
-            setballed(balled +1)
+            
 
  { isstriker? setstrikerball(prev => prev +1):setnonstrikerball(prev=> prev +1)}
 
@@ -189,7 +211,7 @@ function CricSC() {
     }
     const handlewicket=()=>{
                    if(wicket === 3 || over === 10 ) return
-
+   setbowlers((prev)=>prev.map(p=>p.name === baller ?{...p,ballsbowled :p.ballsbowled +1, wicket :p.wicket +1}:p))
 
                     setoverball([...overball,'w'])
 
@@ -383,7 +405,7 @@ function CricSC() {
 
        </>)}
       
-    {targetscore === 0 ? <p className='mx-2 mt-3 mb-2'>Totalscore:{totalscore}-{wicket}</p> :<p className='mx-2 mt-3 mb-2'> Target-{targetscore}</p> }
+    {targetscore === 0 ? <p className='mx-2 mt-3 mb-2'>Totalscore:{totalscore}-{wicket}  Over:{over -1}.{balled}</p> :<p className='mx-2 mt-3 mb-2'> Target-{targetscore}  Over:{over -1}.{balled}</p> }
 <div className='border-1 bg-blue-200 px-2 mx-2'>
          <p>Bowling figures {batsecond}:</p>
 
@@ -397,7 +419,7 @@ function CricSC() {
      const economy= p.ballsbowled> 0 ?(p.Run/over).toFixed(2):"0.00"
      return(
       <>
-    <p >{p.name} {overdisplay} {p.Run} {p.wicket} {economy}</p>
+    <p >{p.name} : {overdisplay} {p.Run} {p.wicket} {economy}</p>
     </>)
   
   })}
